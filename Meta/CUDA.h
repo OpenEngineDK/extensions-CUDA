@@ -41,6 +41,15 @@ inline void DEINITIALIZE_CUDA() {
 
 inline std::string PRINT_CUDA_DEVICE_INFO() {
     std::string str = "\n";
+    /*
+    int rVersion;
+    cudaRuntimeGetVersion(&rVersion); // requires cuda 2.2
+    str += "runtime version: " + Utils::Convert::ToString(rVersion) + "\n";
+
+    int dVersion;
+    cudaDriverGetVersion(&dVersion); // requires cuda 2.2
+    str += "driver version: " + Utils::Convert::ToString(dVersion) + "\n";
+    */
     int numDevices;
     cuDeviceGetCount(&numDevices);
     str += "number of devices: " + Utils::Convert::ToString(numDevices) + "\n";
