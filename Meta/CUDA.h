@@ -116,7 +116,7 @@ inline void THROW_ERROR(const char* file, const int line,
     int n = sprintf (buffer,"[file: %s line: %i] CUDA Error: %s\n",
                      file, line,
                      errorString);
-    printf( buffer );
+    printf( "%s", buffer );
     if (n < 0)
         printf("error when writing error CUDA message\n");
     if (n >= bLength)
