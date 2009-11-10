@@ -1,6 +1,8 @@
 #ifndef _CUDA_HEADERS_
 #define _CUDA_HEADERS_
 
+#undef _GLIBCXX_ATOMIC_BUILTINS // Do MAGIC!!!
+
 #include <Meta/OpenGL.h>
 
 #include <cuda.h>
