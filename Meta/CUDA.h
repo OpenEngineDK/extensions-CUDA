@@ -3,11 +3,13 @@
 
 #undef _GLIBCXX_ATOMIC_BUILTINS // Do MAGIC!!!
 
-#include <Meta/OpenGL.h>
+//#include <Meta/OpenGL.h>
 
 #include <cuda.h>
 #include <cutil.h>
 #include <cufft.h>
+
+#include <string>
 
 #include <vector_types.h>
 #include <cutil_math.h>
@@ -21,6 +23,8 @@
 
 //#include <cutil_gl_error.h>
 //@todo: generetes linker errors, but includes CUT_CHECK_ERROR_GL()
+
+#include <Utils/Convert.h>
 
 using namespace OpenEngine;
 
