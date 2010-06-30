@@ -16,7 +16,7 @@ find_path(CUDA_CUT_INCLUDE_DIR
   NO_DEFAULT_PATH
   )
 
-SET(CUDA_64_BIT_DEVICE_CODE OFF)
+#SET(CUDA_64_BIT_DEVICE_CODE OFF)
 
 find_library(CUDA_CUT_LIBRARY
   NAMES cutil cutil_i386 ${cuda_cutil_name}
