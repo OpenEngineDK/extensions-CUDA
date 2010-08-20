@@ -7,6 +7,7 @@
 
 #include <cuda.h>
 #include <cutil.h>
+#include <cutil_inline.h>
 #include <cufft.h>
 
 #include <string>
@@ -19,6 +20,8 @@
 
 #include <driver_types.h> // includes cudaError_t
 
+// GL headers
+#include <cutil_gl_inline.h>
 #include <cuda_gl_interop.h>
 
 //#include <cutil_gl_error.h>
@@ -26,19 +29,32 @@
 
 #include <Utils/Convert.h>
 
+#include <Logging/Logger.h>
+
 using namespace OpenEngine;
 
 inline void INITIALIZE_CUDA() {
-    cuInit(0);
     //@todo: test that cuda is supported on the platform.
+    
+    cuInit(0);
 
-    //@todo: print installed cuda version, and info like opengl.
+    CUdevice device = cutGetMaxGflopsDeviceId();
+    cudaSetDevice(device);
+    cudaGLSetGLDevice(device);
 
+    int version;
+    cuDriverGetVersion(&version);
+    cudaDeviceProp prop;
+    cudaGetDeviceProperties(&prop, device);
+    logger.info << "CUDA: version " << version << ", using device " << std::string(prop.name) << logger.end;
+
+    /*
     #ifdef _DEBUG
     printf("CUDA_SAFE_CALL: enabled\n");
     #else
     printf("CUDA_SAFE_CALL: disabled\n");
     #endif
+    */
 }
 
 inline void DEINITIALIZE_CUDA() {
