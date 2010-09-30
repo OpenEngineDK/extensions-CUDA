@@ -3,8 +3,6 @@
 
 #undef _GLIBCXX_ATOMIC_BUILTINS // Do MAGIC!!!
 
-//#include <Meta/OpenGL.h>
-
 #include <cuda.h>
 #include <cutil.h>
 #include <cutil_inline.h>
@@ -33,29 +31,9 @@
 
 using namespace OpenEngine;
 
-inline void INITIALIZE_CUDA() {
-    //@todo: test that cuda is supported on the platform.
-    
-    cuInit(0);
+extern cudaDeviceProp activeCudaDevice;
 
-    CUdevice device = cutGetMaxGflopsDeviceId();
-    cudaSetDevice(device);
-    cudaGLSetGLDevice(device);
-
-    int version;
-    cuDriverGetVersion(&version);
-    cudaDeviceProp prop;
-    cudaGetDeviceProperties(&prop, device);
-    logger.info << "CUDA: version " << version << ", using device " << std::string(prop.name) << logger.end;
-
-    /*
-    #ifdef _DEBUG
-    printf("CUDA_SAFE_CALL: enabled\n");
-    #else
-    printf("CUDA_SAFE_CALL: disabled\n");
-    #endif
-    */
-}
+void INITIALIZE_CUDA();
 
 inline void DEINITIALIZE_CUDA() {
     //cuDeinit();
