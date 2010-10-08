@@ -15,4 +15,5 @@ void INITIALIZE_CUDA() {
     cuDriverGetVersion(&version);
     cudaGetDeviceProperties(&activeCudaDevice, device);
     logger.info << "CUDA: version " << version/1000 << "." << version % 100 << ", using device " << std::string(activeCudaDevice.name) << logger.end;
+    CHECK_FOR_CUDA_ERROR();
 }
