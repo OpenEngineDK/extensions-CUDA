@@ -8,6 +8,37 @@ SET(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" "/${OE_CURRENT_EXTENSION_DIR}/cmake
 #MESSAGE(${CMAKE_MODULE_PATH})
 FIND_PACKAGE(CUDA REQUIRED)
 
+
+
+find_path(CUDA_CUDPP_INCLUDE_DIR
+  cudpp.h
+  PATHS ${CUDA_SDK_SEARCH_PATH}
+  PATH_SUFFIXES "common/inc/cudpp"
+  DOC "Location of cudpp.h"
+  NO_DEFAULT_PATH
+  )
+
+IF(CUDA_64_BIT_DEVICE_CODE)
+  SET(CUDPP_NAME cudpp_x86_64)
+  SET(CUT_NAME cutil_x86_64)
+ELSE(CUDA_64_BIT_DEVICE_CODE)
+  SET(CUDPP_NAME cudpp_i386)
+  SET(CUT_NAME cutil_i386)
+ENDIF(CUDA_64_BIT_DEVICE_CODE)
+
+find_library(CUDA_CUDPP_LIBRARY
+  NAMES cudpp ${CUDPP_NAME}
+  PATHS ${CUDA_SDK_SEARCH_PATH}
+  # The new version of the sdk shows up in common/lib, but the old one is in lib
+  PATH_SUFFIXES "common/lib/darwin" "common/lib" "lib" 
+  DOC "Location of cutil library"
+  NO_DEFAULT_PATH
+  )
+
+
+# Now search system paths
+set(CUDA_CUT_LIBRARIES ${CUDA_CUT_LIBRARY})
+ 
 find_path(CUDA_CUT_INCLUDE_DIR
   cutil.h
   PATHS ${CUDA_SDK_SEARCH_PATH}
@@ -16,10 +47,10 @@ find_path(CUDA_CUT_INCLUDE_DIR
   NO_DEFAULT_PATH
   )
 
-#SET(CUDA_64_BIT_DEVICE_CODE OFF)
+# SET(CUDA_64_BIT_DEVICE_CODE OFF)
 
 find_library(CUDA_CUT_LIBRARY
-  NAMES cutil cutil_i386 ${cuda_cutil_name}
+  NAMES cutil ${CUT_NAME} ${cuda_cutil_name}
   PATHS ${CUDA_SDK_SEARCH_PATH}
   # The new version of the sdk shows up in common/lib, but the old one is in lib
   PATH_SUFFIXES "common/lib" "lib"
@@ -51,4 +82,5 @@ CUDA_INCLUDE_DIRECTORIES(
 INCLUDE_DIRECTORIES(
   ${CUDA_INCLUDE_DIRS}
   ${CUDA_CUT_INCLUDE_DIR} #to include cutil.h
+  ${CUDA_CUDPP_INCLUDE_DIR}
 )
