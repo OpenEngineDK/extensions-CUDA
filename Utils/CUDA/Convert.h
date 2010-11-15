@@ -27,6 +27,16 @@ namespace OpenEngine {
             class Convert {
             public:
 
+                static string ToString(const uchar4& t){
+                    std::ostringstream out;
+                    out << "(";
+                    out << (unsigned int)t.x << ", ";
+                    out << (unsigned int)t.y << ", ";
+                    out << (unsigned int)t.z << ", ";
+                    out << (unsigned int)t.w << ")";
+                    return out.str();
+                }
+                
                 static string ToString(const int2& t){
                     std::ostringstream out;
                     out << "(";
