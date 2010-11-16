@@ -91,6 +91,19 @@ namespace OpenEngine {
                     return out.str();
                 }
 
+                static string ToString(char* vl, unsigned int size){
+                    char tmp[size];
+                    cudaMemcpy(tmp, vl, size * sizeof(char), cudaMemcpyDeviceToHost);
+                    CHECK_FOR_CUDA_ERROR();
+
+                    std::ostringstream out;
+                    out << "[" << (int)tmp[0];
+                    for (unsigned int i = 1; i < size; ++i)
+                        out << ", " << (int)tmp[i];
+                    out << "]";
+                    return out.str();
+                }
+
                 static string ToString(int* vl, unsigned int size){
                     int tmp[size];
                     cudaMemcpy(tmp, vl, size * sizeof(int), cudaMemcpyDeviceToHost);
