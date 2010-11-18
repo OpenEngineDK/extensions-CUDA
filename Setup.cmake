@@ -30,7 +30,7 @@ find_library(CUDA_CUDPP_LIBRARY
   NAMES cudpp ${CUDPP_NAME}
   PATHS ${CUDA_SDK_SEARCH_PATH}
   # The new version of the sdk shows up in common/lib, but the old one is in lib
-  PATH_SUFFIXES "common/lib/darwin" "common/lib" "lib" 
+  PATH_SUFFIXES "common/lib/darwin" "common/lib/linux" "common/lib" "lib" 
   DOC "Location of cutil library"
   NO_DEFAULT_PATH
   )
