@@ -5,12 +5,14 @@ cudaDeviceProp activeCudaDevice;
 void INITIALIZE_CUDA() {
     //@todo: test that cuda is supported on the platform.
     
-    cuInit(0);
-
     CUdevice device = cutGetMaxGflopsDeviceId();
     cudaSetDevice(device);
     cudaGLSetGLDevice(device);
+    CHECK_FOR_CUDA_ERROR();
 
+    cuInit(0);
+    CHECK_FOR_CUDA_ERROR();
+ 
     int version;
     cuDriverGetVersion(&version);
     cudaGetDeviceProperties(&activeCudaDevice, device);
