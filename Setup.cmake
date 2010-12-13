@@ -11,9 +11,9 @@ FIND_PACKAGE(CUDA REQUIRED)
 #SET(CUDA_64_BIT_DEVICE_CODE OFF)
 
 find_path(CUDA_CUDPP_INCLUDE_DIR
-  cudpp.h
+  cudpp/cudpp.h
   PATHS ${CUDA_SDK_SEARCH_PATH}
-  PATH_SUFFIXES "common/inc/cudpp"
+  PATH_SUFFIXES "common/inc"
   DOC "Location of cudpp.h"
   NO_DEFAULT_PATH
   )
