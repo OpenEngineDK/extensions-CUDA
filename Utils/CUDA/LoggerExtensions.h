@@ -12,6 +12,21 @@
 
 #include <ostream>
 
+std::ostream& operator<<(std::ostream& os, const uchar2 e) {
+    os << "(" << int(e.x) << ", " << int(e.y) << ")";
+    return os;
+}
+
+std::ostream& operator<<(std::ostream& os, const uchar3 e) {
+    os << "(" << int(e.x) << ", " << int(e.y) << ", " << int(e.z) << ")";
+    return os;
+}
+
+std::ostream& operator<<(std::ostream& os, const uchar4 e) {
+    os << "(" << int(e.x) << ", " << int(e.y) << ", " << int(e.z) << ", " << int(e.w) << ")";
+    return os;
+}
+
 std::ostream& operator<<(std::ostream& os, const int2 e) {
     os << "(" << e.x << ", " << e.y << ")";
     return os;
