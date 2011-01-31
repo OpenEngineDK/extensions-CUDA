@@ -42,6 +42,20 @@ inline std::ostream& operator<<(std::ostream& os, const int4 e) {
     return os;
 }
 
+inline std::ostream& operator<<(std::ostream& os, const longlong2 e) {
+    os << "(" << e.x << ", " << e.y << ")";
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const longlong3 e) {
+    os << "(" << e.x << ", " << e.y << ", " << e.z << ")";
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const longlong4 e) {
+    os << "(" << e.x << ", " << e.y << ", " << e.z << ", " << e.w << ")";
+    return os;
+}
 inline std::ostream& operator<<(std::ostream& os, const float2 e) {
     os << "(" << e.x << ", " << e.y << ")";
     return os;
