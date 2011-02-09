@@ -94,7 +94,7 @@ inline std::string PRINT_CUDA_DEVICE_INFO() {
         cuDeviceGet(&dev,i);
         CUcontext ctx;
         cuCtxCreate(&ctx, 0, dev);
-        unsigned int free, total;
+        size_t free, total;
         cuMemGetInfo(&free, &total);
         str += "total memory: " +
             Utils::Convert::ToString(total) + " bytes / " +
