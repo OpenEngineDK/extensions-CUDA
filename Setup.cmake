@@ -1,3 +1,4 @@
+# CUDA 3.0 and newer nolonger supports emulation mode
 #SET(CUDA_BUILD_TYPE "Emulation") #can be either: Emulation, Device
 SET(CUDA_BUILD_TYPE "Device") #can be either: Emulation, Device
 

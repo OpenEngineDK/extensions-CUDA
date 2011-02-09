@@ -1,6 +1,7 @@
 #ifndef _CUDA_HEADERS_
 #define _CUDA_HEADERS_
 
+#include <Meta/OpenGL.h>
 #undef _GLIBCXX_ATOMIC_BUILTINS // Do MAGIC!!!
 
 #include <cuda.h>
@@ -93,7 +94,7 @@ inline std::string PRINT_CUDA_DEVICE_INFO() {
         cuDeviceGet(&dev,i);
         CUcontext ctx;
         cuCtxCreate(&ctx, 0, dev);
-        size_t free, total;
+        unsigned int free, total;
         cuMemGetInfo(&free, &total);
         str += "total memory: " +
             Utils::Convert::ToString(total) + " bytes / " +
