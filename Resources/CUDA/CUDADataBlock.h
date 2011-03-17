@@ -29,14 +29,15 @@ namespace OpenEngine {
 
             public:
                 CUDADataBlock(unsigned int s = 0, T* d = NULL)
-                    : IDataBlock(s, d, ARRAY, DYNAMIC) {
+                    : IDataBlock(s, NULL, ARRAY, DYNAMIC) {
                     maxSize = s;
-                    if (d == NULL){
-                        cudaMalloc(&this->data, N * s * sizeof(T));
+                    cudaMalloc(&this->data, N * s * sizeof(T));
+                    if (d != NULL)
+                        cudaMemcpy(this->data, d, N * s * sizeof(T), cudaMemcpyHostToDevice);
 #if OE_SAFE
+                    else
                         cudaMemset(this->data, 127, N * s * sizeof(T));
 #endif
-                    }
                     this->dimension = N;
                     hostData = NULL;
                 }
