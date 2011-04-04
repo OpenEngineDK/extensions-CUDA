@@ -18,7 +18,7 @@
 namespace OpenEngine {
     namespace Utils {
         namespace CUDA {
-            
+
             /**
              * Type conversion functions.
              *

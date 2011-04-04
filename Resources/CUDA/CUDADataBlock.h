@@ -21,7 +21,7 @@ namespace OpenEngine {
     namespace Resources {
         namespace CUDA {
 
-            template <unsigned int N, class T>
+            template <class T>
             class CUDADataBlock : public IDataBlock {
             public:
                 int maxSize;
@@ -31,14 +31,14 @@ namespace OpenEngine {
                 CUDADataBlock(unsigned int s = 0, T* d = NULL)
                     : IDataBlock(s, NULL, ARRAY, DYNAMIC) {
                     maxSize = s;
-                    cudaMalloc(&this->data, N * s * sizeof(T));
+                    cudaMalloc(&this->data, s * sizeof(T));
                     if (d != NULL)
-                        cudaMemcpy(this->data, d, N * s * sizeof(T), cudaMemcpyHostToDevice);
+                        cudaMemcpy(this->data, d, s * sizeof(T), cudaMemcpyHostToDevice);
 #if OE_SAFE
                     else
-                        cudaMemset(this->data, 127, N * s * sizeof(T));
+                        cudaMemset(this->data, 127, s * sizeof(T));
 #endif
-                    this->dimension = N;
+                    this->dimension = 1;
                     hostData = NULL;
                 }
 
@@ -62,8 +62,8 @@ namespace OpenEngine {
                  * @return T* pointer to loaded data.
                  */
                 inline T* GetData(){
-                    if (!hostData) hostData = new T[this->size * N];
-                    cudaMemcpy(hostData, this->data, this->size * N * sizeof(T), cudaMemcpyDeviceToHost);
+                    if (!hostData) hostData = new T[this->size];
+                    cudaMemcpy(hostData, this->data, this->size * sizeof(T), cudaMemcpyDeviceToHost);
                     CHECK_FOR_CUDA_ERROR();
                     return hostData;
                 }
@@ -85,18 +85,18 @@ namespace OpenEngine {
                             
                             unsigned int copySize = min(i, this->size);
                             
-                            cudaMalloc(&temp, i * N *sizeof(T));
+                            cudaMalloc(&temp, i * sizeof(T));
 #if OE_SAFE
-                            cudaMemset(temp, 127, i * N * sizeof(T));
+                            cudaMemset(temp, 127, i * sizeof(T));
 #endif
-                            cudaMemcpy(temp, this->data, copySize * N * sizeof(T), cudaMemcpyDeviceToDevice);
+                            cudaMemcpy(temp, this->data, copySize * sizeof(T), cudaMemcpyDeviceToDevice);
                             cudaFree(this->data);
                             this->data = temp;
                             CHECK_FOR_CUDA_ERROR();
                             
                         }else{
                             cudaFree(this->data);
-                            cudaMalloc(&this->data, i * N *sizeof(T));
+                            cudaMalloc(&this->data, i * sizeof(T));
                             CHECK_FOR_CUDA_ERROR();
                         }
                         maxSize = i;
@@ -114,12 +114,9 @@ namespace OpenEngine {
                     std::ostringstream out;
                     out << "[";
                     T* data = GetData();
-                    for (unsigned int i = 0; i < range * N; ++i){
-                        if (i % N == 0) out << "[";
+                    for (unsigned int i = 0; i < range; ++i){
                         out << data[i+index];
-                        if (((i+1) % N) == 0) 
-                            out << "]";
-                        if (i < size * N -1)
+                        if (i < size -1)
                             out << ", ";
                     }
                     out << "]";          
