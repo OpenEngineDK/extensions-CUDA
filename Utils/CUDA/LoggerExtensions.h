@@ -37,6 +37,11 @@ inline std::ostream& operator<<(std::ostream& os, const int3 e) {
     return os;
 }
 
+inline std::ostream& operator<<(std::ostream& os, const dim3 e) {
+    os << "(" << e.x << ", " << e.y << ", " << e.z << ")";
+    return os;
+}
+
 inline std::ostream& operator<<(std::ostream& os, const int4 e) {
     os << "(" << e.x << ", " << e.y << ", " << e.z << ", " << e.w << ")";
     return os;

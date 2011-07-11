@@ -2,11 +2,11 @@
 #SET(CUDA_BUILD_TYPE "Emulation") #can be either: Emulation, Device
 SET(CUDA_BUILD_TYPE "Device") #can be either: Emulation, Device
 
-#INCLUDE(${OE_CURRENT_EXTENSION_DIR}/conf/cmake/cuda/FindCuda.cmake)
+# INCLUDE(${OE_CURRENT_EXTENSION_DIR}/conf/cmake/cuda/FindCuda.cmake)
 
-#INCLUDE(${OE_CURRENT_EXTENSION_DIR}/CMAKE/cuda/FindCuda.cmake)
-SET(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" "/${OE_CURRENT_EXTENSION_DIR}/cmake/cuda")
-#MESSAGE(${CMAKE_MODULE_PATH})
+# INCLUDE(${OE_CURRENT_EXTENSION_DIR}/CMAKE/cuda/FindCuda.cmake)
+# SET(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" "/${OE_CURRENT_EXTENSION_DIR}/cmake/cuda")
+# MESSAGE(${CMAKE_MODULE_PATH})
 FIND_PACKAGE(CUDA REQUIRED)
 
 #SET(CUDA_64_BIT_DEVICE_CODE OFF)
@@ -14,6 +14,7 @@ FIND_PACKAGE(CUDA REQUIRED)
 find_path(CUDA_CUDPP_INCLUDE_DIR
   cudpp/cudpp.h
   PATHS ${CUDA_SDK_SEARCH_PATH}
+  ${PROJECT_SOURCE_DIR}/libraries/cudpp/include
   PATH_SUFFIXES "common/inc"
   DOC "Location of cudpp.h"
   NO_DEFAULT_PATH
@@ -30,6 +31,7 @@ ENDIF(CUDA_64_BIT_DEVICE_CODE)
 find_library(CUDA_CUDPP_LIBRARY
   NAMES cudpp ${CUDPP_NAME}
   PATHS ${CUDA_SDK_SEARCH_PATH}
+  ${PROJECT_SOURCE_DIR}/libraries/cudpp/lib
   # The new version of the sdk shows up in common/lib, but the old one is in lib
   PATH_SUFFIXES "common/lib/darwin" "common/lib/linux" "common/lib" "lib" 
   DOC "Location of cutil library"
